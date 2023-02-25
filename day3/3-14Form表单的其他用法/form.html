@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form demo</title>
+</head>
+<body>
+    <h1>Form表单其他用法</h1>
+    <form action="http://127.0.0.1:8080/login" method="post" enctype="multipart/form-data">
+        <p><input type="text" placeholder="用户名" name="username"></p>
+        <p><input type="password" placeholder="密码" name="password"></p>
+        <p>日期:<input type="date" name="date"></p>
+        <p>性别:男<input type="radio" name="gender">女<input type="radio" name="famale"></p>
+        <p>爱好: <input type="checkbox" name="hobby" value="eat">吃饭<input type="checkbox" name="hobby" value="play">玩游戏<input type="checkbox" name="hobby" value="pa">打豆豆</p>   
+        <p>头像: <input type="file" name="avatar"></p>
+        <button type="submit">提交</button>
+    </form>
+</body>
+</html>
