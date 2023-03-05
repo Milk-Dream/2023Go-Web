@@ -1,0 +1,39 @@
+{{template "home.html" .}}
+
+{{define "content"}}
+<a href="/book_add" class="btn btn-success">添加</a>
+ <table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>书名</th>
+            <th>价格</th>
+            <th>出版社</th>
+            <th>出版日期</th>
+            <th>作者</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range $index, $book := .}}
+            <tr>
+                <td>{{add $index 1}}</td>
+                <td>{{$book.Title}}</td>
+                <td>{{$book.Price}}</td>
+                <td>{{$book.Publisher}}</td>
+                <td>{{$book.PublishDate}}</td>
+                <td>
+                    {{range $anthor := $book.Authors}}
+                        {{$author}}
+                    {{end}}
+                </td>
+                <td>
+                    <a href="#">编辑</a>
+                    <a href="#">删除</a>
+                </td>
+            </tr>
+        {{end}}
+    </tbody>
+ </table>
+
+{{end}}
