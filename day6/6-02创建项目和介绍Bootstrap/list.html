@@ -28,8 +28,8 @@
                     {{end}}
                 </td>
                 <td>
-                    <a href="#">编辑</a>
-                    <a href="#">删除</a>
+                    <a href="/book_edit/{{$index}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
+                    <button onclick="del({{$index}})" class="btn btn-danger btn-xs"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
                 </td>
             </tr>
         {{end}}
@@ -37,3 +37,25 @@
  </table>
 
 {{end}}
+
+<script>
+    function del(id) {
+        swal({
+            title: "温馨提示",
+            text: "你确认要删除该图书吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                swal("删除成功!", {
+                icon: "success",
+                });
+                window.location.href = "/book_delete/" + id;
+            } else {
+                swal("取消删除!");
+            }
+        });
+    }
+    
+   </script>
