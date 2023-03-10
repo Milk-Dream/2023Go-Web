@@ -14,6 +14,28 @@ type Book struct {
 	Authors []string
 }
 
+
+type AuthMiddleWare struct {
+	Next http.Handler
+}
+
+func (am *AuthMiddleWare) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if am.Next == nil {
+		am.Next = http.DefaultServeMux
+	}
+
+	path := r.URL.Path
+	if path == "/book_add" || path == "/book_edit" || path == "/book_delete" {
+		cookie, _ := r.Cookie("admin")
+		if cookie == nil || cookie.Value != "adminValue" {
+			http.Redirect(w, r, "/login", 301)
+		}
+		
+	}
+	am.Next.ServeHTTP(w, r)
+	
+}
+
 var Books []*Book
 var Authors = []string{"张三", "李四"}
 var Publishers = []string{"人民出版社", "北京出版社"}
@@ -80,13 +102,13 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", home)
-	http.HandleFunc("/book_add", loginAuth(add))
-	http.HandleFunc("/book_edit", loginAuth(edit))
-	http.HandleFunc("/book_delete", loginAuth(delete))
+	http.HandleFunc("/book_add", add)
+	http.HandleFunc("/book_edit", edit)
+	http.HandleFunc("/book_delete", delete)
 	http.HandleFunc("/book_list", list)
 	http.HandleFunc("/login", login)
 	http.Handle("/statics/", http.FileServer(http.Dir(".")))
-	http.ListenAndServe("localhost:8888", nil)
+	http.ListenAndServe("localhost:8888", new(AuthMiddleWare))
 }
 
 func list(w http.ResponseWriter, r *http.Request) {
