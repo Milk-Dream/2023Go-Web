@@ -1,0 +1,42 @@
+{{template "home.html" .}}
+
+
+
+{{define "content"}}
+    <h1 class="text-center">编辑书籍</h1>
+    <form action="/book_edit/{{.id}}" method="post">
+        
+        <p>书名:<input type="text" name="title" class="form-control" value="{{.book.Title}}"></p>
+        <p>价格:<input type="text" name="price" class="form-control" value="{{.book.Price}}"></p>
+        <p>出版日期:<input type="date" name="publish_date" class="form-control" value="{{.book.PublisherDate}}"></p>
+        <p>出版社:
+            {{$publisher := .book.Publisher}}
+            <select name="publisher" id="" class="form-control">
+                
+                {{range $p := .publishers}}
+                {{if eq $p $publisher}}
+                <option value="{{$p}}" selected>{{$p}}</option>
+                {{else}}
+                <option value="{{$p}}">{{$p}}</option>
+                {{end}}
+                {{end}}
+            </select>
+        </p>
+        <p>作者:
+            {{$authors := .book.Authors}}
+            <select name="authors" id="" class="form-control" multiple>
+
+                {{range $a := .authors}}
+                    {{if isIn $a $authors}}
+                        <option value="{{$a}}" selected>{{$a}}</option>
+                    {{else}}
+                        <option value="{{$a}}">{{$a}}</option>
+                    {{end}}
+                {{end}}
+            </select>
+        </p>
+        <input type="submit" value="编辑" class="btn btn-primary btn-block">
+    </form>
+ 
+
+{{end}}
